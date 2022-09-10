@@ -1,0 +1,55 @@
+Quick HOWTO on MySQL configuration for edfinfo
+
+* create a database (eventually) and a table
+        
+    CREATE DATABASE `home`;
+    
+    CREATE TABLE IF NOT EXISTS `edfinfo` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `DATE` datetime DEFAULT NULL,
+      `ADCO` varchar(12) DEFAULT NULL,
+      `OPTARIF` varchar(4) DEFAULT NULL,
+      `ISOUSC` decimal(2,0) DEFAULT NULL,
+      `BASE` decimal(9,0) DEFAULT NULL,
+      `HCHC` decimal(9,0) DEFAULT NULL,
+      `HCHP` decimal(9,0) DEFAULT NULL,
+      `EJPHN` decimal(9,0) DEFAULT NULL,
+      `EJPHPM` decimal(9,0) DEFAULT NULL,
+      `BBRHCJB` decimal(9,0) DEFAULT NULL,
+      `BBRHPJB` decimal(9,0) DEFAULT NULL,
+      `BBRHCJW` decimal(9,0) DEFAULT NULL,
+      `BBRHPJW` decimal(9,0) DEFAULT NULL,
+      `BBRHCJR` decimal(9,0) DEFAULT NULL,
+      `BBRHPJR` decimal(9,0) DEFAULT NULL,
+      `PEJP` varchar(2) DEFAULT NULL,
+      `PTEC` varchar(4) DEFAULT NULL,
+      `DEMAIN` varchar(4) DEFAULT NULL,
+      `IINST1` decimal(3,0) DEFAULT NULL,
+      `IINST2` decimal(3,0) DEFAULT NULL,
+      `IINST3` decimal(3,0) DEFAULT NULL,
+      `ADPS` decimal(3,0) DEFAULT NULL,
+      `IMAX1` decimal(3,0) DEFAULT NULL,
+      `IMAX2` decimal(3,0) DEFAULT NULL,
+      `IMAX3` decimal(3,0) DEFAULT NULL,
+      `HHPHC` varchar(1) DEFAULT NULL,
+      `PMAX` decimal(5,0) DEFAULT NULL,
+      `PAPP` decimal(5,0) DEFAULT NULL,
+      `MOTDETAT` varchar(6) DEFAULT NULL,
+      `PPOT` decimal(2,0) DEFAULT NULL,
+      PRIMARY KEY (`id`),
+      KEY `SEARCH_INDEX` (`ADCO`,`DATE`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        
+* create user and grant access on edfinfo table
+        
+    CREATE USER edfinfo@'%'IDENTIFIED BY 'edfinfo'
+    SET PASSWORD FOR edfinfo@'%' = PASSWORD('passw0rd');
+        
+    GRANT ALL ON home.edfinfo TO 'edfinfo'@'%'
+        
+* insert a frame
+        
+    INSERT INTO edfinfo (DATE,MOTDETAT,ADCO,OPTARIF,ISOUSC,
+        PTEC,BASE,IINST1,IMAX1,PAPP,PEJP,ADPS) VALUES 
+        (NOW(),'000000','030422447249','BASE','45','TH..',
+        '041080223','004','013','01050','','');

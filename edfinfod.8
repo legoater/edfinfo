@@ -1,0 +1,199 @@
+.TH EDFINFOD 8 "March 2015" "" "EDF Daemon"
+
+.SH NAME
+edfinfod \-  read EDF teleinformation from a serial line
+
+.SH SYNOPSIS
+.B edfinfod
+.RB [ -vhd
+.RB ]
+.RB [ -c
+.I CONFIG
+.RB ]
+.RB [ -p
+.I PRIORITY
+.RB ]
+.RB [ -o 
+.I FILE
+.RB ]  
+.RB [ -f 
+.I TTY
+.RB ]
+.RB [ -r
+.I RAW
+.RB ]
+
+.B edfinfod --version
+
+.br
+.SH DESCRIPTION
+.B edfinfod
+is a server daemon reading telemetry information from electricity
+meters in France, including the newer Linky meter. Various Telemetry
+frames are sent on a serial line.
+
+.br
+.SH OPTIONS
+.TP
+.B \-?, \-\-help,--usage
+display help and exit
+.TP
+.B \-v, \-\-version
+display version information and exit
+.TP
+.B \-c, \-\-config <\fIFILE\fP>
+use <\fIFILE\fP> to load configuration
+.TP
+.B \-o, \-\-logfile <\fIFILE\fP>
+send logs to <\fIFILE\fP>. When run as a daemon, syslog will be used
+if no file is specified
+.TP
+.B \-p, \-\-logpriority <\fIPRIORITY\fP>
+use log priority <\fIPRIORITY\fP>. Same as syslog, between [0-7]. Default is NOTICE
+.TP
+.B \-f, \-\-tty <\fITTY\fP>
+read EDF info from serial port device <\fITTY\fP>
+.TP
+.B \-r, \-\-raw <\fIRAW\fP>
+record raw data in file <\fIRAW\fP>
+.TP
+.B \-d, \-\-daemon
+daemonize program
+
+.br
+.SH SIGNALS
+On receipt of SIGUSR1
+.B edfinfod
+will dump statistics.
+
+.br
+.SH FILES
+.TP
+.B /etc/edfinfo.conf
+default configuration file
+
+.SH ENVIRONMENT VARIABLES
+The following environment variables have an effect on
+.B edfinfod:
+
+.TP
+.B EDFINFO_CONF
+configuration file
+
+.SH CONFIGURATION
+The
+.B edfinfod
+configuration file is a simple INI file recognizing the following
+sections:
+
+.TP 
+default :
+.RS
+.br 
+\fIlogfile\fP <\fBfile\fR> 
+.br 
+\fIlogpriority\fP <\fB[0-7]\fR> same as syslog
+.br 
+\fIdaemonize\fP <\fB1|0\fR>
+.RE
+
+.TP 
+\fIserial\fP :
+.RS
+.br 
+\fIport\fP <\fB/dev/ttyS1\fR> serial device
+.br 
+\fItimeout\fP <\fBsecs\fR> read timeout in seconds
+.br 
+\fIlograw\fP <\fBfile\fR> copy raw input data in \fBfile\fR
+.RE
+
+.TP
+\fIcontrol\fP : 
+.RS
+.br 
+\fIport\fP <\fBport number\fR> UDP port for \fBedfctl\fR
+.RE
+
+.TP 
+\fImysql\fP :
+.RS
+.br 
+\fIenable\fP <\fB1|0\fR> activate backend or not
+.br 
+\fIratelimit\fP <\fBsecs\fR> limit updates to <\fBsecs\fR>
+.br 
+\fIhost\fP <\fBhostname\fR> 
+.br 
+\fIdb\fP <\fBdatabase name\fR>
+.br 
+\fItable\fP <\fBedfinfo\fR>
+.br 
+\fIuser\fP <\fBedfinfo\fR>
+.br 
+\fIpassword\fP <\fBxxx\fR>
+.RE
+
+.TP 
+\fImqtt\fP :
+.RS
+.br 
+\fIenable\fP <\fB1|0\fR> activate backend or not
+.br 
+\fIratelimit\fP <\fBsecs\fR> limit updates to <\fBsecs\fR>
+.br 
+\fIhost\fP <\fBhostname\fR>
+.br 
+\fIport\fP <\fBport number\fR>
+.br 
+\fIkeepalive\fP <\fBsecs\fR>
+.br 
+\fItopic\fP <\fBsome/topic\fR>
+.RE
+
+.TP 
+\fIedfinfo\fP : 
+.RS
+
+This section can be used to enforce checks on some information frames
+which are considered constant.
+
+.br 
+\fIADCO\fP <\fB0123456789\fR>
+.br 
+\fIOPTARIF\fP <\fBBASE\fR>
+.br 
+\fIISOUSC\fP <\fB45\fR>
+.br 
+.RE
+
+.SH EXAMPLES
+
+To run as a system daemon :
+
+  # edfinfod -c /path/to/edfinfo.conf --daemon
+
+To check the serial line output :
+
+  # edfinfod -c /path/to/edfinfo.conf -o /dev/stderr -p debug --debug
+
+.SH REPORTING BUGS
+Report 
+.B edfinfod
+bugs to Cédric Le Goater <clg@kaod.org>.
+
+.SH AUTHOR
+.B edfinfod
+is written by Cédric Le Goater <clg@kaod.org> using the mysql library, the
+mosquitto library and the inih library. 
+
+.SH COPYRIGHT
+Copyright (C) 2022, Cédric Le Goater <clg@kaod.org>
+
+.SH LICENSE
+.B edfinfod
+This code is licensed under the GPL version 2 or later.
+
+.SH SEE ALSO
+mysql(1), edfctl(1)
+

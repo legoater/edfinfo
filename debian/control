@@ -1,0 +1,16 @@
+Source: edfinfo
+Section: utilities
+Priority: extra
+Maintainer: Cédric Le Goater <clg@kaod.org>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+Homepage: https://github.com/legoater/edfinfo
+#Vcs-Git: git://git.debian.org/collab-maint/edfinfo.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/edfinfo.git;a=summary
+
+Package: edfinfo
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: read information from electricity meter (France)
+ reads information from electricity meter
+

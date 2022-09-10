@@ -1,0 +1,55 @@
+.TH EDFCTL 1 "March 2015" "" "User Commands"
+
+.SH NAME
+edfctl \-  send a command to the edfinfo daemon
+
+.SH SYNOPSIS
+.B edfctl 
+.RB [ -vh 
+.RB ]
+.RB [ -p
+.I PORT
+.RB ]
+.RB [ -H
+.I HOSTNAME
+.RB ]
+.RB [<
+.I COMMAND
+.RB >]
+
+.B edfctl --version
+
+.br
+.SH DESCRIPTION
+.TP
+.B \-?, \-\-help,--usage
+display help and exit
+.TP
+.B \-v, \-\-version
+display version information and exit
+.TP
+.B \-H, \-\-host <HOST>
+connect to <HOST> for UDP requests. default is "localhost"
+.TP
+.B \-p, \-\-port <PORT>
+connect to <PORT> for UDP requests. default is ":54345"
+
+.SH REPORTING BUGS
+Report 
+.B edfinfod
+bugs to Cédric Le Goater <clg@kaod.org>.
+
+.SH AUTHOR
+.B edfinfod
+is written by Cédric Le Goater <clg@kaod.org> using the mysql library, the
+mosquitto library and the inih library. 
+
+.SH COPYRIGHT
+Copyright (C) 2022, Cédric Le Goater <clg@kaod.org>
+
+.SH LICENSE
+.B edfinfod
+This code is licensed under the GPL version 2 or later.
+
+.SH SEE ALSO
+edfinfod(8)

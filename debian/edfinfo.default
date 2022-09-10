@@ -1,0 +1,19 @@
+# Defaults for edfinfo initscript
+# sourced by /etc/init.d/edfinfo
+# installed at /etc/default/edfinfo by the maintainer scripts
+
+
+# Logging. 
+#
+# syslog is used if no file is specified. default priority is
+# LOG_NOTICE (5). Increase to 7 to get all traces.
+#
+#LOGPRIORITY="--logpriority=5"
+#LOGFILE="--logfile="/tmp/edfinfo.log""
+
+# Serial line
+#
+#SERIAL="--tty=/dev/ttyAMA0"
+ 
+# Additional options that are passed to the Daemon.
+DAEMON_ARGS="--daemon $SERIAL"
